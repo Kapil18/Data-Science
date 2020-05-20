@@ -1,1 +1,1 @@
-Extract rdata folder and put jupyter notebook in rdata folder you get after extraction
+Extract rdata file and put jupyter notebook in rdata folder you get after extraction
