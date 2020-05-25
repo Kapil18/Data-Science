@@ -15,11 +15,12 @@ import datetime
 #Function to display Frames on Tkinter  UI
 def videost():
     ret,frame = cap.read()
-    
-    faces=face_cascade.detectMultiScale(frame ,1.1 ,4)
-
-    for (x, y, w, h) in faces:
-        cv.rectangle(frame ,(x,y) ,(x+w ,y+h) ,(255,0,0) ,0)
+    if (togglevar.get()==1):
+        faces=face_cascade.detectMultiScale(frame ,1.1 ,4)
+        for (x, y, w, h) in faces:
+            cv.rectangle(frame ,(x,y) ,(x+w ,y+h) ,(255,0,0) ,0)
+    else:
+        pass
     img=cv.cvtColor(frame ,cv.COLOR_BGR2RGB)
     img=Image.fromarray(img)
     imgtk=ImageTk.PhotoImage(img,master=root)
@@ -92,8 +93,12 @@ l2.pack()
 Label1=Label(root,bg="powder blue")
 Label1.place(x=0,y=70,width=840,height=380)
 
-cap=cv.VideoCapture(0)
+Fl=Label(root,text="Detect Face",font="comicsanms 10 bold",bg="powder blue").place(x=400,y=470)
 
+#RadioButton for toggling face detection
+togglevar=IntVar()
+rb1 = Radiobutton(root, text="ON ", variable=togglevar, value=1, indicatoron=0).place(x=410,y=500)
+rb1 = Radiobutton(root, text="OFF ", variable=togglevar, value=0, indicatoron=0).place(x=440,y=500)
 
     
 #Button for image capture
@@ -103,6 +108,9 @@ Cap_button=Button(root, text="Capture Image",command=capture).place(x=200,y= 470
 video_var=StringVar()
 video_button=Button(root,textvariable=video_var,command= video_rec).place(x=600,y= 470)    
 video_var.set("Start Recording")
+
+
+cap=cv.VideoCapture(0)
 videost()  
 
 
